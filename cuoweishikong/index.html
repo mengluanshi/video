@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Full Screen Video Player</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            overflow: hidden;
+        }
+        video {
+            display: block;
+            width: 100vw;
+            height: 100vh;
+            object-fit: cover;
+        }
+        .loading {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: white;
+            font-size: 24px;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <div id="loading" class="loading">Loading...</div>
+    <video id="videoPlayer" controls preload="auto" autoplay>a
+        <source src="https://media.githubusercontent.com/media/mengluanshi/video/master/cuoweishikong/cuoweishikong.mp4" type="video/mp4">
+        Your browser does not support the video tag.
+    </video>
+
+    <script>
+        const video = document.getElementById('videoPlayer');
+        const loadingMessage = document.getElementById('loading');
+
+        video.addEventListener('canplay', () => {
+            // Hide the loading message when the video is ready to play
+            loadingMessage.style.display = 'none';
+        });
+
+        video.addEventListener('play', () => {
+            // Request the video to play in full screen mode
+            if (video.requestFullscreen) {
+                video.requestFullscreen();
+            } else if (video.webkitRequestFullscreen) {
+                video.webkitRequestFullscreen();
+            } else if (video.mozRequestFullScreen) {
+                video.mozRequestFullScreen();
+            } else if (video.msRequestFullscreen) {
+                video.msRequestFullscreen();
+            }
+        });
+
+        video.addEventListener('waiting', () => {
+            // Show the loading message if the video is buffering
+            loadingMessage.style.display = 'block';
+        });
+
+        video.addEventListener('playing', () => {
+            // Hide the loading message when video starts playing
+            loadingMessage.style.display = 'none';
+        });
+    </script>
+</body>
+</html>
